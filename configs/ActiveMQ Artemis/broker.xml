@@ -161,7 +161,7 @@ under the License.
 
 
          <!-- Acceptor for every supported protocol -->
-         <acceptor name="artemis">tcp://0.0.0.0:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;amqpMinLargeMessageSize=102400;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300;amqpDuplicateDetection=true;supportAdvisory=false;suppressInternalManagementObjects=false</acceptor>
+         <acceptor name="artemis">tcp://0.0.0.0:61616?anycastPrefix=jms.queue.;multicastPrefix=jms.topic.;tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;amqpMinLargeMessageSize=102400;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300;amqpDuplicateDetection=true;supportAdvisory=false;suppressInternalManagementObjects=false</acceptor>
 
          <!-- AMQP Acceptor.  Listens on default AMQP port for AMQP traffic.-->
          <acceptor name="amqp">tcp://0.0.0.0:5672?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=AMQP;useEpoll=true;amqpCredits=1000;amqpLowCredits=300;amqpMinLargeMessageSize=102400;amqpDuplicateDetection=true</acceptor>
@@ -227,6 +227,11 @@ under the License.
             <auto-delete-queues>false</auto-delete-queues>
             <auto-delete-addresses>false</auto-delete-addresses>
          </address-setting>
+
+         <address-setting match="testTopic">
+            <auto-create-queues>true</auto-create-queues>
+            <auto-delete-queues>true</auto-delete-queues>
+         </address-setting>
       </address-settings>
 
       <addresses>
@@ -244,6 +249,9 @@ under the License.
                <anycast>
                  <queue name="testQueue"/>
                </anycast>
+         </address>
+         <address name="testTopic">
+            <multicast/>
          </address>
       </addresses>
 
